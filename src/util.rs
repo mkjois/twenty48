@@ -1,5 +1,5 @@
 use std::old_io;
-use std::rand;
+use rand;
 
 /// Checks if x in [a,b].
 ///

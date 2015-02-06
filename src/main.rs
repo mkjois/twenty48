@@ -1,8 +1,9 @@
 #![feature(core,box_syntax)]
 
-extern crate twenty48;
 extern crate ncurses;
+extern crate twenty48;
 
+use ncurses::*;
 use twenty48::board::Board;
 use twenty48::board::Action;
 use twenty48::board::Status;
@@ -11,7 +12,6 @@ use twenty48::agent::HumanAgent;
 //use twenty48::agent::RandomAgent;
 use twenty48::agent::is_arrow_key;
 use twenty48::util;
-use ncurses::*;
 
 fn main() {
   // magic constants
@@ -41,7 +41,7 @@ fn main() {
   scrollok(stdscr, true);
   noecho();
 
-  let mut board = Board::new(l, w, goal, 0.5);
+  let mut board = Board::new(l, w, goal, 0.25);
   printw(format!("{}\n", board.to_string()).as_slice());
 
   /* Loop for input. */

@@ -1,4 +1,7 @@
-#![feature(io,core,rand)]
+#![feature(io,core)]
+
+extern crate rand;
+extern crate ncurses;
 
 /*
 #[test]

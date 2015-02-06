@@ -1,6 +1,4 @@
-extern crate ncurses;
-
-use self::ncurses::*;
+use ncurses::*;
 use board::Board;
 use board::Action;
 
@@ -14,7 +12,7 @@ pub trait Agent {
 }
 
 impl Agent for HumanAgent {
-  fn choose_move(&self, board: &Board, c: i32) -> Action {
+  fn choose_move(&self, _: &Board, c: i32) -> Action {
     match c {
       KEY_DOWN => Action::Down,
       KEY_UP => Action::Up,
@@ -26,7 +24,7 @@ impl Agent for HumanAgent {
 }
 
 impl Agent for RandomAgent {
-  fn choose_move(&self, board: &Board, c: i32) -> Action {
+  fn choose_move(&self, _: &Board, c: i32) -> Action {
     match c {
       KEY_DOWN => Action::Down,
       KEY_UP => Action::Up,
