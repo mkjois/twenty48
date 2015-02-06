@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mkjois/twenty48.svg?branch=master)](https://travis-ci.org/mkjois/twenty48)
+
 # twenty48
 By Manny Jois
 
