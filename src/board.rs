@@ -8,6 +8,7 @@ pub struct Board {
   w: usize,
   goal: u32,
   cells: Vec<u32>,
+  prob: f32,
 }
 
 #[derive(Copy)]
@@ -28,19 +29,20 @@ pub enum Status {
 }
 
 impl Board {
-  pub fn new(l: usize, w: usize, goal: u32) -> Board {
+  pub fn new(l: usize, w: usize, goal: u32, prob: f32) -> Board {
     let mut cells = Vec::with_capacity(l*w);
     for _ in 0..l*w {
       cells.push(0);
     }
-    let mut b = Board{l: l, w: w, goal: goal, cells: cells};
-    b.spawn(0.5);
+    let mut b = Board{l: l, w: w, goal: goal, cells: cells, prob: prob};
+    let index = b.spawn();
+    b.cells[index] = if util::flip(prob) { 4 } else { 2 };
     return b;
   }
 
   // spawns a tile where 'prob' is the probability of a 4 instead of a 2
   // returns true iff no more valid moves
-  fn spawn(&mut self, prob: f32) -> bool {
+  fn spawn(&mut self) -> usize {
     let mut index = self.l*self.w;
     let mut denom = 1.0;
     for i in 0..self.l*self.w {
@@ -50,9 +52,7 @@ impl Board {
       }
       denom += 1.0;
     }
-    if index == self.l*self.w { return true; }
-    self.cells[index] = if util::flip(prob) { 4 } else { 2 };
-    return false;
+    index
   }
 
   pub fn act(&mut self, action: Action) -> Status {
@@ -197,12 +197,12 @@ impl Board {
       },
       Noop => {},
     }
-    if changed {
-      let no_more_space = self.spawn(0.5);
-      if no_more_space { Status::Lose } else { Status::Valid }
-    } else {
-      Status::Invalid
-    }
+    let index = self.spawn();
+    if index == size { Status::Lose }
+    else if changed {
+      self.cells[index] = if util::flip(self.prob) { 4 } else { 2 };
+      Status::Valid
+    } else { Status::Invalid }
   }
 }
 

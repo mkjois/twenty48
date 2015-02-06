@@ -19,13 +19,13 @@ fn main() {
   let (lw_lower, lw_upper) = (2, 6);
   let (goal_lower, goal_upper) = (4, 65536);
 
-  let l = util::get_int_input("Board length:",
+  let l = util::get_int_input(format!("Board length (default={}, min={}, max={}):", default_l, lw_lower, lw_upper).as_slice(),
                               default_l,
                               |&: x: u32| { util::check_bounded(x as i32, lw_lower, lw_upper) }) as usize;
-  let w = util::get_int_input("Board width:",
+  let w = util::get_int_input(format!("Board width (default={}, min={}, max={}):", default_w, lw_lower, lw_upper).as_slice(),
                               default_w,
                               |&: x: u32| { util::check_bounded(x as i32, lw_lower, lw_upper) }) as usize;
-  let goal = util::get_int_input("Goal power of 2:",
+  let goal = util::get_int_input(format!("Goal power of 2 (default={}, min={}, max={}):", default_goal, goal_lower, goal_upper).as_slice(),
                                  default_goal,
                                  |&: x: u32| { util::check_power_of_base(x, 2) &&
                                                util::check_bounded(x as i32, goal_lower, goal_upper) });
@@ -41,7 +41,7 @@ fn main() {
   scrollok(stdscr, true);
   noecho();
 
-  let mut board = Board::new(l, w, goal);
+  let mut board = Board::new(l, w, goal, 0.5);
   printw(format!("{}\n", board.to_string()).as_slice());
 
   /* Loop for input. */
@@ -49,7 +49,6 @@ fn main() {
   loop {
     refresh();
     if full {
-      refresh();
       getch();
       endwin();
       return;
