@@ -1,0 +1,12 @@
+[root]
+name = "twenty48"
+version = "0.0.1"
+dependencies = [
+ "ncurses 5.71.1 (git+https://github.com/jeaye/ncurses-rs.git)",
+]
+
+[[package]]
+name = "ncurses"
+version = "5.71.1"
+source = "git+https://github.com/jeaye/ncurses-rs.git#719885f690e5e64ef18b2ce6fbb8f12c61ca2081"
+
